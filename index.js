@@ -13,25 +13,25 @@ const options = program.opts();
 
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
-    case "getAll":
+    case "list":
       const contactsList = await contactsOperations.listContacts();
       console.table(contactsList);
       break;
-    case "getById":
+    case "get":
       const contact = await contactsOperations.getContactById(id);
       if (!contact) {
         throw new Error(`contact whith id = ${id} not found`);
       }
       console.log(contact);
       break;
-    case "removeContact":
+    case "remove":
       const contactToRemove = await contactsOperations.removeContact(id);
       if (!contactToRemove) {
         throw Error(`contact whith id = ${id} not found`);
       }
       console.log(contactToRemove);
       break;
-    case "addContact":
+    case "add":
       const contacToAdd = await contactsOperations.addContact({
         name,
         email,
