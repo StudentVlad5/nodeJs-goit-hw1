@@ -29,8 +29,8 @@ async function removeContact(contactId) {
   await fs.writeFile(contactsPath, JSON.stringify(updatedContacts));
   const removeContact = data[idContact];
   data = await listContacts();
-  console.table(data)
-return removeContact
+  console.table(data);
+  return removeContact;
 }
 
 async function addContact(contact) {
@@ -43,15 +43,11 @@ async function addContact(contact) {
 }
 
 async function updateContact(contact) {
-  const contacts = await listContacts();
+  const data = await listContacts();
   const { id } = contact;
-  const idContact = contacts.findIndex((item) => item.id === id);
-  if (idContact === -1) {
-    return null;
-  }
-  contacts[idContact] = { ...contact };
-  await fs.writeFile(contactsPath, JSON.stringify(contacts));
-  return contacts;
+  const updatedContacts = data.map((contact)=>{if(contact.id === id){return {...data,...contact}}})
+  await fs.writeFile(contactsPath, JSON.stringify(updatedContacts));
+  return updatedContacts;
 }
 
 module.exports = {
